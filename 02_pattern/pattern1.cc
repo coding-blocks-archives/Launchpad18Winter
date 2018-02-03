@@ -18,8 +18,8 @@ int main() {
         // think about 3rd line
         for (int val = 1; val <= curLine; ++val) {
             cout << val << " ";
-            cout << endl;
         }
+        cout << endl;
     }
 
 }
