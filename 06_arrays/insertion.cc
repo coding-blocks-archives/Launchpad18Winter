@@ -64,6 +64,32 @@ void outputArr(int arr[], int n){
     }
 }
 
+bool pairSum(int arr[], int n, int sum){
+    for(int i = 0; i < n - 1; ++i){
+        for(int j = i + 1; j < n; ++j){
+            if (arr[i] + arr[j] == sum){
+                cout << arr[i] << " " << arr[j] << endl;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool pairSum2(int arr[], int n, int sum){
+    for(int i = 0; i < n; ++i){
+        int curElem = arr[i];
+        int remEle = sum - curElem;
+        int pos = binarySearch(arr, i + 1, n - 1, remEle);
+        if (pos != -1){
+            cout << curElem << " " << remEle << endl;
+            return true;
+        }
+    }
+    return false;
+
+}
+
 
 int main() {
     int arr[100];
@@ -73,9 +99,13 @@ int main() {
     // insertionSort(arr, n);
     // selectionSort(arr, n);
     
+    // int x; cin >> x;
+    // int ans = binarySearch(arr, 0, n - 1, x);
+    // cout << "element found @ " << ans;
+
     int x; cin >> x;
-    int ans = binarySearch(arr, 0, n - 1, x);
-    cout << "element found @ " << ans;
+    bool ans = pairSum2(arr, n, x); 
+    cout << ans << endl;
 
     // outputArr(arr, n);
 
