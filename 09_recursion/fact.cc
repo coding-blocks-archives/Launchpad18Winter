@@ -87,6 +87,35 @@ int maxElementArr(int arr[], int n) {
     }
 }
 
+
+int searchArr(int arr[], int n, int x){
+    if (n <= 0){
+        return -1;
+    }
+
+    int posInRemArr = searchArr(arr, n - 1, x);
+    if (posInRemArr != -1){
+        // element has been found
+        return posInRemArr;
+    }
+
+    if (x == arr[n - 1]) return n - 1;
+
+    return -1;
+}
+
+
+int searchArr(int arr[], int n, int x){
+    if (n <= 0){
+        return -1;
+    }
+
+    if (arr[n - 1] == x) return n - 1;
+
+    return searchArr(arr, n - 1, x);
+
+}
+
 int main() {
     // int n;
     // cin >> n;
