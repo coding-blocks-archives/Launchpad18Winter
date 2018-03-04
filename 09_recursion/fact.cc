@@ -3,9 +3,9 @@
 #include <iostream>
 using namespace std;
 
-int fact(int n){
+int fact(int n) {
     // recursion
-    if (n <= 0){
+    if (n <= 0) {
         return 1;
     }
 
@@ -14,17 +14,17 @@ int fact(int n){
     return ans;
 }
 
-int fib(int n){
+int fib(int n) {
     // fib returns the nth fibonacci number
     if (n <= 0) return 0;
     if (n == 1) return 1;
 
-    int ans = fib(n-1) + fib(n-2);
+    int ans = fib(n - 1) + fib(n - 2);
     return ans;
 }
 
-void printInc(int n){
-    // that prints n integers in inc order and after 
+void printInc(int n) {
+    // that prints n integers in inc order and after
     // printing the number, prints a space also
     // 1_2_3_4_5_
 
@@ -32,19 +32,19 @@ void printInc(int n){
     if (n <= 0) return ;
 
     // 1_2_3_4_ recursion se
-    printInc(n -1); // same problem as original
+    printInc(n - 1); // same problem as original
     // 5_
     cout << n << " ";
 }
 
-void printInc1(int n){
+void printInc1(int n) {
     if (n <= 0) return;
     printInc1(n - 1);
     cout << n << "_";
 }
 
-void printDec(int n){
-    if (n <= 0){
+void printDec(int n) {
+    if (n <= 0) {
         return;
     }
 
@@ -52,18 +52,64 @@ void printDec(int n){
     printDec(n - 1);
 }
 
+int power(int n, int x) {
+    // n^x
+    if (x <= 0) {
+        return 1;
+    }
 
-int main(){
-    int n;
-    cin >> n;
+    int smallPow = power(n, x - 1);
+    return smallPow * n;
+}
+
+void dispArr(int arr[], int n) {
+    // [1,2,3,4,5], 5
+    if (n <= 0) {
+        // no elements to print
+        return;
+    }
+
+    dispArr(arr, n - 1);
+    cout << arr[n - 1] << " ";
+}
+
+int maxElementArr(int arr[], int n) {
+    if (n == 0){
+        int inf = 1000000;
+        return -inf;
+    }
+    int maxElementRemArr = maxElementArr(arr, n - 1);
+    if (maxElementRemArr > arr[n - 1]) {
+        return maxElementRemArr;
+    }
+    else {
+        return arr[n - 1];
+    }
+}
+
+int main() {
+    // int n;
+    // cin >> n;
 
     // int ans = fact(n);
-    // cout << ans;    
+    // cout << ans;
 
     // int ans = fib(n);
     // cout << ans;
 
     // printInc1(n);
+    // printDec(n);
 
-    printDec(n);
+    // int n, x;
+    // cin >> n >> x;
+    // int ans = power(n, x);
+    // cout << ans;
+
+    int arr[10], n;
+    cin >> n;
+    for (int i = 0; i < n; ++i) cin >> arr[i];
+    // dispArr(arr, n);
+
+    int ans = maxElementArr(arr, n);
+    cout << ans;
 }
