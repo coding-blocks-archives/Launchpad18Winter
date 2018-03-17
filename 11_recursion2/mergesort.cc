@@ -69,6 +69,9 @@ void mergeSort(int arr[], int be, int en) { //[be,en]
     mergeSortedArr(arr, be, mid, en);
 }
 
+/*********************************************/
+// Keypad codes
+
 void getButton(char dig, char arr[]){
     char table[][5] = {
         " ", 
