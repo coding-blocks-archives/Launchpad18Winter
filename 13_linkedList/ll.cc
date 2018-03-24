@@ -10,6 +10,7 @@ public:
     // ctor1
     Node(int d){
         data = d;
+        next = NULL;
     }
 };
 
@@ -37,12 +38,17 @@ Node* createLL(){
 }
 
 void display(Node* head){
-    
+    Node* cur = head;
+    while(cur != NULL){                 // while(cur)
+        cout << cur->data << "-->";
+        cur = cur->next;
+    }
 }
 
 
 
 int main(){
-    Node* myList = createLL();
+    Node* head = createLL();
+    display(head);
     
 }
