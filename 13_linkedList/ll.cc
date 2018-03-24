@@ -106,6 +106,26 @@ Node* mergeLL(Node* a, Node* b){
     }
 }
 
+Node* addNumbers(Node* a, Node* b){
+
+}
+
+Node* midPoint(Node* head){
+
+}
+
+Node* fifthLast(Node* head){
+
+}
+
+Node* bubbleSort(Node* head){
+
+}
+
+Node* addOne(Node* head){
+
+}
+
 
 int main(){
     // Node* head = createLL();
@@ -117,10 +137,10 @@ int main(){
     // display(head);
 
 
-    Node* a = createLL();
-    Node* b = createLL();
-    Node* c = mergeLL(a, b);
-    display(c);
+    // Node* a = createLL();
+    // Node* b = createLL();
+    // Node* c = mergeLL(a, b);
+    // display(c);
 
 
 }
