@@ -111,11 +111,30 @@ Node* addNumbers(Node* a, Node* b){
 }
 
 Node* midPoint(Node* head){
+    Node* slow = head;   // SET
+    Node* fast = head;
 
+    // GO
+    while(slow && fast && fast->next && fast->next->next){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
 }
 
 Node* fifthLast(Node* head){
+    Node* cur = head;
+    for(int i = 0; cur && i < 4; ++i){
+        cur = cur->next;
+    }
 
+    // SET
+    Node* srt = head;
+    while(cur && cur->next){
+        srt = srt->next;
+        cur = cur->next;
+    }
+    return srt;
 }
 
 Node* bubbleSort(Node* head){
@@ -126,6 +145,57 @@ Node* addOne(Node* head){
 
 }
 
+int lenLL(Node* head){
+
+}
+
+Node* addNumbers(Node* a, Node* b, int lena, int lenb){ 
+   if (a == NULL && b == NULL){
+    return NULL;
+   }
+
+   if (!a) return b;
+   if (!b) return a;
+
+   if (lena < lenb){
+    swap(a, b);
+    swap(lena, lenb);
+   }
+
+   Node* ans = NULL;
+   int curNum = 0, dig = 0, carry = 0;
+   if (lena == lenb){
+    ans = addNumbers(a->next, b->next, lena-1, lenb-1);
+    if (ans){
+        curNum = ans->data;
+        dig = ans->data % 10;
+        carry = ans->data / 10;
+        ans->data = dig;
+    }
+    Node* curNode = new Node(carry + a->data + b->data);
+    curNode->next = ans;
+    return curNode; 
+   }
+   else{
+    ans = addNumbers(a->next, b, lena-1, lenb);
+    if (ans){
+        curNum = ans->data;
+        dig = ans->data % 10;
+        carry = ans->data / 10;
+        ans->data = dig;
+    }
+    Node* curNode = new Node(carry + a->data);
+    curNode->next = ans;
+    return curNode; 
+   }
+}
+
+void print(Node* x){
+    cout << x << " ";
+    if (x){
+    cout << x->data << endl;
+    }
+}
 
 int main(){
     // Node* head = createLL();
@@ -142,7 +212,19 @@ int main(){
     // Node* c = mergeLL(a, b);
     // display(c);
 
+    // Node* head = createLL();
+    // Node* mid = midPoint(head);
+    // print(mid);
 
+    // Node* head = createLL();
+    // Node* ans = fifthLast(head);
+    // print(ans);
+
+
+    // Node* a = createLL();
+    // Node* b = createLL();
+    // Node* ans = addNumbers(a, b, 1, 3);
+    // display(ans);
 }
 
 
