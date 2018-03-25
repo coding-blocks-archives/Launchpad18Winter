@@ -179,12 +179,22 @@ Node* fifthLast(Node* head){
     return srt;
 }
 
-Node* bubbleSort(Node* head){
-
-}
-
 Node* addOne(Node* head){
+    Node* lastNonNine = head;
+    Node* cur = head;
+    while(cur){
+        if (cur->data < 9){
+            lastNonNine = cur;
+        }
+        cur = cur->next;
+    }
+    lastNonNine->data += 1;
 
+    lastNonNine = lastNonNine->next;
+    while(lastNonNine){
+        lastNonNine->data = 0;
+        lastNonNine = lastNonNine->next;
+    }
 }
 
 int lenLL(Node* head){
@@ -198,45 +208,66 @@ int lenLL(Node* head){
     return cnt;
 }
 
+Node* copyLL(Node* head){
+    Node* cur = head;
+    Node* newHead = NULL;
+    Node* tail = NULL;
+
+    while(cur){
+        Node* tmp = new Node(cur->data);
+        if (newHead){
+            newHead = tmp;
+            tail = tmp;
+        }
+        else{
+            tail->next = new Node(cur->data);
+            tail = tail->next;
+        }
+        cur = cur->next;
+    }
+    return newHead;
+}
+
 Node* addNumbers(Node* a, Node* b, int lena, int lenb){ 
-   if (a == NULL && b == NULL){
-    return NULL;
-   }
-
-   if (!a) return b;
-   if (!b) return a;
-
-   if (lena < lenb){
-    swap(a, b);
-    swap(lena, lenb);
-   }
-
-   Node* ans = NULL;
-   int curNum = 0, dig = 0, carry = 0;
-   if (lena == lenb){
-    ans = addNumbers(a->next, b->next, lena-1, lenb-1);
-    if (ans){
-        curNum = ans->data;
-        dig = ans->data % 10;
-        carry = ans->data / 10;
-        ans->data = dig;
+    if (!a){
+       Node* cloneB = copyLL(b);
+       return cloneB;
     }
-    Node* curNode = new Node(carry + a->data + b->data);
-    curNode->next = ans;
-    return curNode; 
-   }
-   else{
-    ans = addNumbers(a->next, b, lena-1, lenb);
-    if (ans){
-        curNum = ans->data;
-        dig = ans->data % 10;
-        carry = ans->data / 10;
-        ans->data = dig;
+
+    if (!b){
+        return copyLL(a);
     }
-    Node* curNode = new Node(carry + a->data);
-    curNode->next = ans;
-    return curNode; 
-   }
+
+    if (lenb > lena){
+        swap(a, b);
+        swap(lena, lenb);
+    }
+
+    if (lena > lenb){ 
+        Node* ans = addNumbers(a->next, b, lena-1, lenb);
+        int carry = 0;
+        if (ans && ans->data >= 10){
+            carry = ans->data / 10;
+            ans->data = ans->data % 10;
+        }
+
+        Node* tmp = new Node(a->data + carry);
+        tmp->next = ans;
+        return tmp;
+    }
+    else {
+        // lengths are same
+        Node* ans = addNumbers(a->next, b->next, lena-1, lenb-1);
+        int carry = 0;
+        if (ans && ans->data >= 10){
+            carry = ans->data / 10;
+            ans->data = ans->data % 10;
+        }
+
+        Node* tmp = new Node(a->data + b->data + carry);
+        tmp->next = ans;
+        return tmp;
+    }
 }
 
 void print(Node* x){
@@ -245,6 +276,77 @@ void print(Node* x){
     cout << x->data << endl;
     }
 }
+
+Node* mergeSort(Node* a){
+    if (a == NULL || a->next == NULL) return a;
+    // if (!a or !a->next) return a;
+
+    Node* midNode = midPoint(a);
+    Node* b = midNode->next;
+    midNode->next = NULL;
+
+    a = mergeSort(a);
+    b = mergeSort(b);
+    Node* ans = mergeLL(a, b);
+}
+
+Node* bubbleSort(Node* a){
+    const int len = lenLL(a);
+
+    for(int i = 0; i < len; ++i){
+        Node* curNode = a;
+        Node* prevNode = NULL;
+
+        while(curNode && curNode->next){
+            Node* ahead = curNode->next;
+            if (curNode->data > ahead->data){
+                // swapping required
+                if(curNode == a){
+                    curNode->next = ahead->next;
+                    ahead->next = curNode;
+                    a = ahead;
+                    prevNode = a;
+                }
+                else{
+                    curNode->next = ahead->next;
+                    ahead->next= curNode;
+                    prevNode->next = ahead;
+                    prevNode = ahead;
+                }
+            }
+            else {
+                prevNode = curNode;
+                curNode = curNode->next;
+            }
+        }
+    }
+    return a;
+}
+
+bool detectCycle(Node* a){
+    Node* slow = a;
+    Node* fast = a;
+    bool isLoop = false;
+
+    // GO
+    while(slow && fast && fast->next){  // Floyd Cycle
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            isLoop = true;
+            break;
+        }
+    }
+
+    slow = a;
+    while(slow->next != fast->next){
+        slow = slow->next;
+        fast = fast->next;
+    }
+    fast->next = NULL;
+    return isLoop;
+}
+
 
 int main(){
     // Node* head = createLL();
@@ -269,20 +371,37 @@ int main(){
     // Node* ans = fifthLast(head);
     // print(ans);
 
+    // Node* a = createLL();
+    // Node* b = createLL();
+    // Node* ans = addNumbers(a, b);
+    // display(ans);
 
-    Node* a = createLL();
-    Node* b = createLL();
-    Node* ans = addNumbers(a, b);
-    display(ans);
-
+    // Node* a = createLL();
+    // addOne(a);
+    // display(a);
 
     // Node* a = createLL();
     // Node* b = createLL();
-    // Node* ans = addNumbers(a, b, 1, 3);
+    // Node* ans = addNumbers(a, b, lenLL(a), lenLL(b));
     // display(ans);
+
+    // Node* a = createLL();
+    // a = mergeSort(a);
+    // display(a);
+
+    // Node* a = createLL();
+    // a = bubbleSort(a);
+    // display(a);
+
+    Node* a = createLL();
+    a->next->next->next->next->next->next->next = 
+        a->next->next->next;
+    bool ans = detectCycle(a);
+    display(a);
+    cout << ans;
+
+
 }
-
-
 
 // reverse
 // merge 2 sorted
