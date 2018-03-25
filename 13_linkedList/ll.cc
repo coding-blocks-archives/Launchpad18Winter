@@ -107,7 +107,49 @@ Node* mergeLL(Node* a, Node* b){
 }
 
 Node* addNumbers(Node* a, Node* b){
+    Node* revA = reverseLL(a);
+    Node* revB = reverseLL(b);
+    Node* revC = NULL;
 
+    Node* curA = revA;
+    Node* curB = revB;
+    Node* tail = NULL;
+
+    int carry = 0, dig = 0, sum = 0;
+
+    while(curA or curB){
+        sum = 0;
+        if (curA) sum += curA->data;
+        if (curB) sum += curB->data;
+        sum += carry;
+        
+        dig = sum % 10;
+        carry = sum / 10;
+
+        if (revC == NULL){
+            // the ones place
+            revC = new Node(dig);
+            tail = revC;
+
+        }
+        else {
+            tail->next = new Node(dig);
+            tail = tail->next;
+        }
+        if (curA) curA = curA->next;
+        if (curB) curB = curB->next;
+    }
+
+    if (carry) {
+        tail->next = new Node(carry);
+        tail = tail->next;
+    }
+
+    // reset
+    revA = reverseLL(revA);
+    revB = reverseLL(revB);
+    revC = reverseLL(revC);
+    return revC;
 }
 
 Node* midPoint(Node* head){
@@ -146,7 +188,14 @@ Node* addOne(Node* head){
 }
 
 int lenLL(Node* head){
+    int cnt = 0;
+    Node* cur = head;
 
+    while(cur){
+        cnt++;
+        cur = cur->next;
+    }
+    return cnt;
 }
 
 Node* addNumbers(Node* a, Node* b, int lena, int lenb){ 
@@ -219,6 +268,12 @@ int main(){
     // Node* head = createLL();
     // Node* ans = fifthLast(head);
     // print(ans);
+
+
+    Node* a = createLL();
+    Node* b = createLL();
+    Node* ans = addNumbers(a, b);
+    display(ans);
 
 
     // Node* a = createLL();
