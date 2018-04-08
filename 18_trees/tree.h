@@ -96,7 +96,7 @@ void levelWiseOutput(TreeNode* root) {
             continue;
         }
         cout << curNode->data;
-        cout << "(" << (curNode->next ? curNode->next->data : 0) << ")" << "-->";
+        // cout << "(" << (curNode->next ? curNode->next->data : 0) << ")" << "-->";
         cout << " ";
 
         if (curNode->left) q.push(curNode->left);

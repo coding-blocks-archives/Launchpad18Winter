@@ -4,6 +4,7 @@
 #include "tree.h"
 #include <queue>
 #include <map>
+#include <stack>
 using namespace std;
 
 struct Triplet{
@@ -80,6 +81,7 @@ void connectLevels(TreeNode* root){
     }
 }
 
+
 int main(){
     TreeNode* root = levelWiseInput();
     // levelWiseOutput(root);
@@ -93,6 +95,7 @@ int main(){
     // int levelToPrint = 0;
     // leftView(root, 0, levelToPrint); 
 
-    connectLevels(root);
-    levelWiseOutput(root);
+    // connectLevels(root);
+    // levelWiseOutput(root);
+    printTree(root);
 }
