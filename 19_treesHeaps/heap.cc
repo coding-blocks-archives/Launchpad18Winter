@@ -64,23 +64,35 @@ public:
     }
 };
 
-void printBestK(int arr[], int n){
+void printBestK(int arr[], int n, int k){
     priority_queue<int, vector<int>, Compare> pq;
+    
+    for(int i = 0; i < k; ++i){
+        pq.push(arr[i]);
+    }
+
+    for(int i = k; i < n; ++i){
+        pq.push(arr[i]);
+        pq.pop();
+    }
+
+    while(pq.empty() == false){
+        cout << pq.top() << " ";
+        pq.pop();
+    }
    
 }
 
 
-
-
 int main() {
-    Heap h;
-    h.push(5);
-    h.push(7);
-    h.push(9);
-    h.push(4);
-    h.push(-3);
-    h.push(-7);
-    h.push(6);
+    // Heap h;
+    // h.push(5);
+    // h.push(7);
+    // h.push(9);
+    // h.push(4);
+    // h.push(-3);
+    // h.push(-7);
+    // h.push(6);
 
     // cout << h.top() << endl; h.pop();
     // cout << h.top() << endl; h.pop();
@@ -89,6 +101,6 @@ int main() {
     // cout << h.top() << endl; h.pop();
 
     int arr[] = {5, 2, 3, 1, 4, 6};
-    printBestK(arr, 6);
+    printBestK(arr, 6, 3);
 
 }
