@@ -47,14 +47,14 @@ int knapsackdp(vector<int>& val, vector<int>& wt, int n, int capacity) {
     for (int itemNo = 1; itemNo <= n; ++itemNo) {
         for (int c = 1; c <= capacity; ++c) {
             int q1 = 0, q2 = 0;
-            if (c <= wt[itemNo - 1]) {
+            if (wt[itemNo - 1] <= c) {
                 q1 = val[itemNo - 1] + dp[itemNo - 1][c - wt[itemNo - 1]];
             }
             q2 = dp[itemNo - 1][c];
             dp[itemNo][c] = max(q1, q2);
         }
     }
-    print(dp, n + 1, capacity +1);
+    // print(dp, n + 1, capacity +1);
     return dp[n][capacity];
 }
 
