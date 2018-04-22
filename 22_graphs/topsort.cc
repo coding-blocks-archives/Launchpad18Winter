@@ -48,6 +48,11 @@ public:
     vector<string> toposort() {
         map<string, int> indegree;
 
+        // map construct
+        for(auto& ele : m){
+            indegree[ele.first] = 0;
+        }
+
         for (auto& s : m) {
             for (auto& nbr : s.second) {
                 indegree[nbr]++;
@@ -55,9 +60,9 @@ public:
         }
 
         // indegree printing
-        for (auto& ele : indegree) {
-            cout << ele.first << " " << ele.second << endl;
-        }
+        // for (auto& ele : indegree) {
+        //     cout << ele.first << " " << ele.second << endl;
+        // }
 
         queue<string> q;
         for(auto& ele:indegree){
@@ -68,9 +73,9 @@ public:
 
         vector<string> ans;
         
-        while(q.empty() != false){
+        while(q.empty() == false){
             ans.push_back(q.front());
-            auto curVtx = q.front();
+            auto curVtx = q.front(); 
             q.pop();
 
             for(auto& n : m[curVtx]){
